@@ -14,7 +14,7 @@ let pointsGame = null;
 let word = null;
 var cardAlias = null;
 let timerID = null;
-let second = 60;
+let second = 15;
 
 // Start game!
 function startGame() {  
@@ -206,7 +206,7 @@ function timer() {
 // Resetting timer.
 function stopTimer() {
    clearInterval(timerID);
-   second = 60;
+   second = 15;
 };
 
 function clear() {
