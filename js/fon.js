@@ -2,7 +2,7 @@ const FON = document.querySelector('body');
 FON.style.backgroundColor = '#C1EFFF';
 
 const element = [
-    { name: 'ball', src: 'fon/ball.svg' },
+    { name: 'ball', src: './fon/ball.svg' },
     { name: 'cloud1', src: 'fon/left1.svg' },
     { name: 'cloud2', src: 'fon/left2.svg' },
     { name: 'cloud3', src: 'fon/right3.svg' },
