@@ -7,7 +7,7 @@
 }
 
 body {
-    background-image: url("/fon/els.png"), url("/fon/els.png");
+    background-image: url("../fon/els.png"), url("../fon/els.png");
     background-repeat: no-repeat;
     background-position: top -450px left 0px, bottom -750px right 0px;
     background-size: 3000px, 3000px;
