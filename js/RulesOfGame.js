@@ -1,4 +1,4 @@
-import goBackMenu from "./Alias-v1.js";
+import goBackMenu from "./script.js";
 
 const btnRules = document.querySelector('button[data-open]');
 btnRules.addEventListener("click", openRules);
