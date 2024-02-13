@@ -1,5 +1,14 @@
 import card from './card.js';
 import openRules from './RulesOfGame.js';
+import elementImg from './db-cloud.js';
+import createCloudAnimation from './fon.js';
+
+
+elementImg.forEach((item, i) => {
+    createCloudAnimation('img', elementImg[i].src, elementImg[i].selector);
+})
+
+
 
 const mainBlock = document.querySelector('.main-block');
 const sectionContainer = document.querySelector('.container');

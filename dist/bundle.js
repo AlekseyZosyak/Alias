@@ -100,6 +100,120 @@ const card = [
 
 /***/ }),
 
+/***/ "./js/db-cloud.js":
+/*!************************!*\
+  !*** ./js/db-cloud.js ***!
+  \************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const elementImg = [
+    { name: 'ball', src: './fon/ball.svg', selector: ['ball', 'mode'] },
+    { name: 'cloud1', src: 'fon/left1.svg', selector: ['cloud1', 'mode'] },
+    { name: 'cloud2', src: 'fon/left2.svg', selector: ['cloud2', 'mode'] },
+    { name: 'cloud3', src: 'fon/right3.svg', selector: ['cloud3', 'mode'] },
+    { name: 'cloud4', src: 'fon/right4.svg', selector: ['cloud4', 'mode'] },
+    { name: 'cloud5', src: 'fon/right5.svg', selector: ['cloud5', 'mode'] },
+    { name: 'floor1', src: 'fon/floor1.svg', selector: ['floor1', 'mode', 'mode-floor'] },
+    { name: 'floor2', src: 'fon/floor2.svg', selector: ['floor2', 'mode', 'mode-floor'] },
+    { name: 'floor3', src: 'fon/floor3.svg', selector: ['floor3', 'mode', 'mode-floor'] }
+];
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (elementImg);
+
+/***/ }),
+
+/***/ "./js/fon.js":
+/*!*******************!*\
+  !*** ./js/fon.js ***!
+  \*******************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+
+function createCloudAnimation(teg, src, arraySelectorClass) {
+    const bg = document.querySelector('body');
+    bg.style.backgroundColor = '#C1EFFF';
+
+    const element = document.createElement(teg);
+
+    arraySelectorClass.forEach((item) => {
+        element.classList.add(item);
+    });
+
+    element.src = src;
+    bg.append(element);
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createCloudAnimation);
+
+
+
+
+
+// const ball = document.createElement('img');
+// const ballIndex = element[0]['src'];
+//     ball.src = ballIndex;
+//     ball.className = 'ball mode';
+//     FON.append(ball);
+
+// const cloud1 = document.createElement('img');
+// const cloud1Index = element[1]['src'];
+//     cloud1.src = cloud1Index;
+//     cloud1.className = 'cloud1 mode';
+//     FON.append(cloud1);
+
+// const cloud2 = document.createElement('img');
+// const cloud2Index = element[2]['src'];
+//     cloud2.src = cloud2Index;
+//     cloud2.className = 'cloud2 mode';
+//     FON.append(cloud2);
+
+// const cloud3 = document.createElement('img');
+// const cloud3Index = element[3]['src'];
+//     cloud3.src = cloud3Index;
+//     cloud3.className = 'cloud3 mode';
+//     FON.append(cloud3);
+
+// const cloud4 = document.createElement('img');
+// const cloud4Index = element[4]['src'];
+//     cloud4.src = cloud4Index;
+//     cloud4.className = 'cloud4 mode';
+//     FON.append(cloud4);
+
+// const cloud5 = document.createElement('img');
+// const cloud5Index = element[5]['src'];
+//     cloud5.src = cloud5Index;
+//     cloud5.className = 'cloud5 mode';
+//         FON.append(cloud5);
+
+// const floor1 = document.createElement('img');
+// const floor1Index = element[6]['src'];
+//     floor1.src = floor1Index;
+//     floor1.className = 'floor1 mode mode-floor';
+//     FON.append(floor1);
+
+// const floor2 = document.createElement('img');
+// const floor2Index = element[7]['src'];
+//     floor2.src = floor2Index;
+//     floor2.className = 'floor2 mode mode-floor';
+//     FON.append(floor2);
+
+// const floor3 = document.createElement('img');
+// const floor3Index = element[8]['src'];
+//     floor3.src = floor3Index;
+//     floor3.className = 'floor3 mode mode-floor';
+//     FON.append(floor3);
+
+
+/***/ }),
+
 /***/ "./js/script.js":
 /*!**********************!*\
   !*** ./js/script.js ***!
@@ -112,6 +226,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _card_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./card.js */ "./js/card.js");
 /* harmony import */ var _RulesOfGame_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RulesOfGame.js */ "./js/RulesOfGame.js");
+/* harmony import */ var _db_cloud_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./db-cloud.js */ "./js/db-cloud.js");
+/* harmony import */ var _fon_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fon.js */ "./js/fon.js");
+
+
+
+
+
+
+_db_cloud_js__WEBPACK_IMPORTED_MODULE_2__["default"].forEach((item, i) => {
+    (0,_fon_js__WEBPACK_IMPORTED_MODULE_3__["default"])('img', _db_cloud_js__WEBPACK_IMPORTED_MODULE_2__["default"][i].src, _db_cloud_js__WEBPACK_IMPORTED_MODULE_2__["default"][i].selector);
+})
 
 
 
