@@ -4,7 +4,6 @@ import openRules from './RulesOfGame.js';
 const mainBlock = document.querySelector('.main-block');
 const sectionContainer = document.querySelector('.container');
 
-
 const btnStart = document.querySelector('#start-game');
 btnStart.addEventListener('click', startGame);
 
@@ -14,7 +13,11 @@ let pointsGame = null;
 let word = null;
 var cardAlias = null;
 let timerID = null;
-let second = 15;
+let second = 10;
+
+
+
+
 
 // Start game!
 function startGame() {  
