@@ -1,6 +1,7 @@
+@import 'components/background/_ball.scss';
+@import 'components/animation/_animation.scss';
 
-
-/* * { 
+* { 
     padding: 0px;
     margin: 0px;
     box-sizing: border-box; 
@@ -323,4 +324,4 @@ body {
 }
 .error_button:hover {
     width: 350px;
-} */
+}

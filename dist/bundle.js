@@ -149,6 +149,7 @@ function createCloudAnimation(teg, src, arraySelectorClass) {
 
     element.src = src;
     bg.append(element);
+    console.log(element);
 }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (createCloudAnimation);
