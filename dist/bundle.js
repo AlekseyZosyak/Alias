@@ -236,7 +236,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
     _db_cloud_js__WEBPACK_IMPORTED_MODULE_2__["default"].forEach((item, i) => {
-        (0,_fon_js__WEBPACK_IMPORTED_MODULE_3__["default"])('svg', _db_cloud_js__WEBPACK_IMPORTED_MODULE_2__["default"][i].src, _db_cloud_js__WEBPACK_IMPORTED_MODULE_2__["default"][i].selector);
+        (0,_fon_js__WEBPACK_IMPORTED_MODULE_3__["default"])('img', _db_cloud_js__WEBPACK_IMPORTED_MODULE_2__["default"][i].src, _db_cloud_js__WEBPACK_IMPORTED_MODULE_2__["default"][i].selector);
     })
     
     

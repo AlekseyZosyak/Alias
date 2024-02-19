@@ -38,3 +38,99 @@
     animation-name: cloud5-animation;
     animation-duration: 3s;
 }
+
+@media screen and (max-width: 1900px) {
+   
+    .cloud3 {
+        right: 550px;
+    }
+    .cloud4 {
+        right: 250px;
+    }
+   
+}
+
+@media screen and (max-width: 1800px) {
+    .cloud3 {
+        right: 500px;
+    }
+    
+    
+}
+
+
+@media screen and (max-width: 1700px) {
+   
+    .cloud1 {
+        width: 350px;
+    }
+    .cloud2 {
+        width: 200px;
+    }
+    .cloud3 {
+        width: 200px;
+    }
+    .cloud4 {
+        width: 300px;
+    }
+    .cloud5{
+        width: 350px;
+    }
+  
+}
+
+@media screen and (max-width: 1600px) {
+  
+    .cloud1 {
+        width: 300px;
+    }
+    .cloud2 {
+        width: 150px;
+        left: 350px;
+    }
+    .cloud3 {
+        width: 150px;
+        right: 500px;
+    }
+    .cloud4 {
+        width: 250px;
+        top: 300px;
+        right: 250px;
+    }
+    .cloud5{
+        width: 300px;
+    }
+  
+}
+
+@media screen and (max-width: 1400px) {
+  
+    .cloud1 {
+        width: 250px;
+    }
+    .cloud2 {
+        left: 250px;
+    }
+    .cloud3 {
+        right: 400px;
+    }
+    .cloud4 {
+        width: 200px;
+        right: 120px;
+    }
+    .cloud5{
+        width: 250px;
+    }
+    
+}
+
+@media screen and (max-width: 1300px) {
+  
+    .cloud3 {
+        right: 400px;
+    }
+    .cloud5{
+        width: 250px;
+    }
+ 
+}
