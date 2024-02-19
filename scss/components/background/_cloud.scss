@@ -1,0 +1,40 @@
+.cloud1 {
+    width: 450px;
+    top: 20px;
+    left: 0px;
+    z-index: 5;
+    animation-name: cloud1-animation;
+    animation-duration: 3s;
+}
+.cloud2 {
+    width: 250px;
+    top: 85px;
+    left: 420px;
+    z-index: 0;
+    animation-name: cloud2-animation;
+    animation-duration: 4s;
+}
+.cloud3 {
+    width: 200px;
+    top: 0px;
+    right: 750px;
+    z-index: 0;
+    animation-name: cloud3-animation;
+    animation-duration: 4.5s;
+}
+.cloud4 {
+    width: 350px;
+    top: 400px;
+    right: 400px;
+    z-index: 4;
+    animation-name: cloud4-animation;
+    animation-duration: 4s;
+}
+.cloud5 {
+    width: 450px;
+    top: 0px;
+    right: 0px;
+    z-index: 5;
+    animation-name: cloud5-animation;
+    animation-duration: 3s;
+}
