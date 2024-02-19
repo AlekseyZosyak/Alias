@@ -5,7 +5,7 @@ import createCloudAnimation from './fon.js';
 
 
     elementImg.forEach((item, i) => {
-        createCloudAnimation('img', elementImg[i].src, elementImg[i].selector);
+        createCloudAnimation('svg', elementImg[i].src, elementImg[i].selector);
     })
     
     
