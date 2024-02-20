@@ -2,54 +2,6 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./js/RulesOfGame.js":
-/*!***************************!*\
-  !*** ./js/RulesOfGame.js ***!
-  \***************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _script_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./script.js */ "./js/script.js");
-
-
-const btnRules = document.querySelector('button[data-open]');
-btnRules.addEventListener("click", openRules);
-
-const sectionContainer = document.querySelector('.container');
-const mainBlock = document.querySelector('.main-block');
-
-const newBlock = document.createElement('div');
-
-function openRules() {
-    
-        newBlock.className = 'main-block';
-        newBlock.innerHTML = '<h2 class="rules_title">Правила игры:</h2> <p class="rules_text">Игрок за 60секунд должен на английском обьяснить другому игроку слово указанное на карточке. Если смог тогда жми кнопку "YES", если нет тогда нажимай "NO". За каждое отгаданное слово игрок получит 1 балл!!!</p> <button class="main-button utilit-btn1" data-back>back</button>';
-        sectionContainer.append(newBlock);
-
-    deletAlias();
-
-    const btnBack = document.querySelector('button[data-back]');
-    btnBack.addEventListener('click', back);
-    console.log(btnBack);
-};
-
-function deletAlias() {
-    mainBlock.remove();
-    _script_js__WEBPACK_IMPORTED_MODULE_0__["default"].remove();
-};
-
-function back() {
-    newBlock.remove();
-    sectionContainer.append(mainBlock);
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (openRules);
-
-/***/ }),
-
 /***/ "./js/card.js":
 /*!********************!*\
   !*** ./js/card.js ***!
@@ -215,269 +167,110 @@ function createCloudAnimation(teg, src, arraySelectorClass) {
 
 /***/ }),
 
-/***/ "./js/script.js":
-/*!**********************!*\
-  !*** ./js/script.js ***!
-  \**********************/
+/***/ "./js/modules/generatorRandomCards.js":
+/*!********************************************!*\
+  !*** ./js/modules/generatorRandomCards.js ***!
+  \********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _card_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./card.js */ "./js/card.js");
-/* harmony import */ var _RulesOfGame_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RulesOfGame.js */ "./js/RulesOfGame.js");
-/* harmony import */ var _db_cloud_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./db-cloud.js */ "./js/db-cloud.js");
-/* harmony import */ var _fon_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./fon.js */ "./js/fon.js");
+
+
+function generatorRandomCards(card) {
+    let cardAlias = card[Math.floor(Math.random() * card.length)];
+
+    if (cardAlias == undefined) {
+
+        return oops();
+    };
+
+    return cardAlias;
+    
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (generatorRandomCards);
+
+/***/ }),
+
+/***/ "./js/modules/startField.js":
+/*!**********************************!*\
+  !*** ./js/modules/startField.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _card__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../card */ "./js/card.js");
+/* harmony import */ var _generatorRandomCards__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./generatorRandomCards */ "./js/modules/generatorRandomCards.js");
 
 
 
 
+class GameField {
+    constructor(parendSelector, tegElement) {
+        this.container = document.querySelector(parendSelector);
+        this.element = document.createElement(tegElement);
+    }
 
+    startMenu() {
+        this.element.classList.add('main-block');
+        this.element.innerHTML = `
+                    <h1 class="main-block_title">Alias</h1>
+                    <button class="main-button utilit-btn1" data-start-game>Start game</button>
+                    <button class="main-button utilit-btn2" data-open>Rules of game</button>`;
+        container.append(this.element);
 
-    _db_cloud_js__WEBPACK_IMPORTED_MODULE_2__["default"].forEach((item, i) => {
-        (0,_fon_js__WEBPACK_IMPORTED_MODULE_3__["default"])('img', _db_cloud_js__WEBPACK_IMPORTED_MODULE_2__["default"][i].src, _db_cloud_js__WEBPACK_IMPORTED_MODULE_2__["default"][i].selector);
-    })
-    
-    
-    
-    const mainBlock = document.querySelector('.main-block');
-    const sectionContainer = document.querySelector('.container');
-    
-    const btnStart = document.querySelector('#start-game');
-    btnStart.addEventListener('click', startGame);
-    
-    let rightAnswer = [];
-    let wrongAnswer = [];
-    let pointsGame = null;
-    let word = null;
-    var cardAlias = null;
-    let timerID = null;
-    let second = 20;
-    
-    
-    
-    
-    
-    // Start game!
-    function startGame() {  
-    
-        gameInfo.remove();
-        goBackMenu.remove();
-        mainBlock.remove();
-    
-        gameField();
-        timerID = setInterval(timer, 1000);
-        clear();
-    };
-    
-    // Random image generation.
-    function randomImg() {
-        
-        cardAlias = _card_js__WEBPACK_IMPORTED_MODULE_0__["default"][Math.floor(Math.random() * _card_js__WEBPACK_IMPORTED_MODULE_0__["default"].length)];
-        if (cardAlias == undefined) {
-            field.remove();
-            return oops();
-        };
-        img.src = cardAlias.img;
-        word = cardAlias;
-        
-    };
-    
-    const time = document.createElement('div');
-    const img = document.createElement('img');
-    const field = document.createElement('div');
-    const flexBtn = document.createElement('div');
-    const btnNo = document.createElement('button');
-    const btnYes = document.createElement('button');
-    
-    function gameField() {
-        
-        field.className = 'main-block field';
-        time.className = 'field_time';
-        time.innerHTML = '<span data-time>60</span>';
-        field.append(time);
-        
-            randomImg();
-            img.className = "img";
-            field.append(img);   
-    
-            flexBtn.className = 'field_flexBtn';
-            field.append(flexBtn);
-        
-            btnNo.className = 'answer-button wrong';
-            btnNo.id = 'card-false';
-            btnNo.textContent = 'No';
-            flexBtn.append(btnNo);
-        
-            btnYes.className = 'answer-button right';
-            btnYes.id = 'card-true';
-            btnYes.textContent = 'Yes';
-            flexBtn.append(btnYes);
-            sectionContainer.append(field);
-    
-        const throwOutBTN = document.querySelector('#card-false');
-        throwOutBTN.addEventListener('click', throwOutCard);
-        const nextBTN = document.querySelector('#card-true');
-        nextBTN.addEventListener('click', nextCard); 
-    
-    };
-    
-    // Сorrect answer and new card. guessed right
-    function nextCard() {
-        
-        pointsGame += 1;
-        rightAnswer.push(word.word);  
-    
-            let deletIndex = _card_js__WEBPACK_IMPORTED_MODULE_0__["default"].indexOf(word);
-            _card_js__WEBPACK_IMPORTED_MODULE_0__["default"].splice(deletIndex, 1);
-    
-        if( second === 0 ) {
-            stopGame();
-        };
-        
-        randomImg();
-        
-    }; 
-    
-    // Wrong answer and new card.
-    function throwOutCard() {
-        
-        wrongAnswer.push(word.word);
-    
-            let deletIndex = _card_js__WEBPACK_IMPORTED_MODULE_0__["default"].indexOf(word);
-            _card_js__WEBPACK_IMPORTED_MODULE_0__["default"].splice(deletIndex, 1);
-            
-    
-        if( second === 0 ) {
-            stopGame();
-        };
-    
-        randomImg();
-    };
-    
-    
-    // stop game and result output.
-    const gameInfo = document.createElement('div');
-    
-    function stopGame() {
-        
-        stopTimer();
-        field.remove();
-    
-        const rightAnswerResult = rightAnswer.join(', ');
-        const wrongAnswerResult = wrongAnswer.join(', ');
-    
-            gameInfo.className = 'answer_block';
-            gameInfo.innerHTML = '<h2 class="answer_title">Общий бал :&nbsp&nbsp&nbsp<span class="answer_points"></span></h2>';
-            sectionContainer.append(gameInfo);
-        
-        let points = document.querySelector('.answer_points');
-            points.innerText = `${pointsGame}`;
-       
-        const answerElementYes = document.createElement('div');
-            answerElementYes.className = 'answer_part';
-            answerElementYes.innerText = 'Отгаданние слова : ';
-            gameInfo.append(answerElementYes);
-            const elementYes = document.createElement('span');
-                elementYes.className = 'answer_out-right';
-                elementYes.innerText = `${rightAnswerResult}`;
-                answerElementYes.append(elementYes);
-    
-        const answerElementNo = document.createElement('div');
-            answerElementNo.className = 'answer_part';
-            answerElementNo.innerText = 'Не отгаданные слова : ';
-            gameInfo.append(answerElementNo);
-            const elementNo = document.createElement('span');
-                elementNo.className = 'answer_out-wrong';
-                elementNo.innerText = `${wrongAnswerResult}`;
-                answerElementNo.append(elementNo);
-        
-        const flexBtn2 = document.createElement('div');
-            flexBtn2.className = 'answer_flexBtn';
-            gameInfo.append(flexBtn2);
-    
-        const btnNewGame = document.createElement('button');
-            btnNewGame.id = 'NewGame';
-            btnNewGame.className = 'main-button utilit-btn1';
-            btnNewGame.innerText = 'New game';
-            flexBtn2.append(btnNewGame);
-                const newGame = document.querySelector('#NewGame');
-                newGame.addEventListener('click', startGame);
-    
-        const btnBackMenu = document.createElement('button');
-            btnBackMenu.id = 'BackMenu';
-            btnBackMenu.className = 'main-button utilit-btn2';
-            btnBackMenu.innerText = 'Back menu';
-            flexBtn2.append(btnBackMenu);
-                const BackMenu = document.querySelector('#BackMenu');
-                BackMenu.addEventListener('click', back);
-    };
-    
-    const goBackMenu = document.createElement('div');
-    function back() {
-    
-        error.remove();
-        gameInfo.remove();
-        
-    
-        goBackMenu.className = 'main-block';
-        goBackMenu.innerHTML = '<h1 class="main-block_title">Alias</h1><button class="main-button utilit-btn1" id="start-game">Start game</button><button class="main-button utilit-btn2" data-open>Rules of game</button>';
-        sectionContainer.append(goBackMenu);
-    
-        const btnStart = document.querySelector('#start-game');
-            btnStart.addEventListener('click', startGame);
-    
-        const btnRules = document.querySelector('button[data-open]');
-            btnRules.addEventListener("click", _RulesOfGame_js__WEBPACK_IMPORTED_MODULE_1__["default"]);
-    
-    }; 
-    /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (goBackMenu);
-    
-    
-    // Start timer in the game.
-    function timer() {
-        const outTime = document.querySelector('span[data-time]');
-    
-        if ( second > 0 ) {
-            second -= 1;
-            outTime.textContent = second;
-        } else {
-            outTime.textContent = "finish";
-        };
-    };
-    // Resetting timer.
-    function stopTimer() {
-       clearInterval(timerID);
-       second = 15;
-    };
-    
-    function clear() {
-        pointsGame = 0;
-        rightAnswer = [];
-        wrongAnswer = [];
-    };
-    
-    const error = document.createElement('div');
-    const oops = function () {
-        stopTimer();
-            error.className = 'error';
-            error.innerHTML = '<h1 class="error_title">ERROR!</h1><p class="error_text">Эй, зачем ты со сной так? зачем так клацать? Я начинающий программис и все баги пофиксить не успел </p>';
-            sectionContainer.append(error)
-        const errorBtn = document.createElement('button');
-            errorBtn.className = 'error_button main-button';
-            errorBtn.textContent = 'Давай начнем все с начала'
-            error.append(errorBtn);
-        errorBtn.addEventListener('click', function() {
-            back();
-            gameInfo.remove();
-            location.reload();
-        });
-    };
-    
+        document.querySelector('button[data-start-game]').addEventListener('click', () => {
+            this.removeElement();
+            this.startGame();
+        })
+        document.querySelector('button[data-open]').addEventListener('click', () => {
+            this.removeElement();
+            this.openRules();
+        })
+    }
+
+    openRules() {
+        this.element.classList.add('main-block');
+        this.element.innerHTML = `<h2 class="rules_title">Правила игры:</h2> 
+            <p class="rules_text">Игрок за 60секунд должен на английском обьяснить другому игроку слово указанное на карточке. Если смог тогда жми кнопку "YES", если нет тогда нажимай "NO". За каждое отгаданное слово игрок получит 1 балл!!!</p> 
+            <button class="main-button utilit-btn1" data-back>back</button>`;
+        container.append(this.element);
+
+        document.querySelector('button[data-back]').addEventListener('click', () => {
+            this.removeElement();
+            this.startMenu();
+        })
+    }
+
+    startGame() {
+        const aliasCard = (0,_generatorRandomCards__WEBPACK_IMPORTED_MODULE_1__["default"])(_card__WEBPACK_IMPORTED_MODULE_0__["default"]);
+        this.element.classList.add('main-block', 'field');
+        this.element.innerHTML = `
+            <span class="field_time" data-time>60</span>
+            <img src="${aliasCard.img}" class="img">
+           
+            <div>
+                <button class="answer-button wrong" id="card-false">No</button>
+                <button class="answer-button right" id="card-true">Yes</button>
+            </div>`;
+        container.append(this.element);
+    }
+
+    removeElement() {
+        this.element.remove();
+    }
+}
 
 
 
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GameField);
 
 
 
@@ -539,12 +332,283 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("./js/script.js");
-/******/ 	
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!**********************!*\
+  !*** ./js/script.js ***!
+  \**********************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _card_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./card.js */ "./js/card.js");
+/* harmony import */ var _db_cloud_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./db-cloud.js */ "./js/db-cloud.js");
+/* harmony import */ var _fon_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./fon.js */ "./js/fon.js");
+/* harmony import */ var _modules_generatorRandomCards_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/generatorRandomCards.js */ "./js/modules/generatorRandomCards.js");
+/* harmony import */ var _modules_startField_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/startField.js */ "./js/modules/startField.js");
+
+
+
+
+
+
+window.addEventListener('DOMContentLoaded', () => {
+
+    new _modules_startField_js__WEBPACK_IMPORTED_MODULE_4__["default"]('.container', 'div').startMenu();
+    
+    _db_cloud_js__WEBPACK_IMPORTED_MODULE_1__["default"].forEach((item, i) => {
+        (0,_fon_js__WEBPACK_IMPORTED_MODULE_2__["default"])('img', _db_cloud_js__WEBPACK_IMPORTED_MODULE_1__["default"][i].src, _db_cloud_js__WEBPACK_IMPORTED_MODULE_1__["default"][i].selector);
+    })
+
+   
+    
+})
+
+    
+    
+    // const mainBlock = document.querySelector('.main-block');
+    // const sectionContainer = document.querySelector('.container');
+    
+    // const btnStart = document.querySelector('#start-game');
+    // btnStart.addEventListener('click', startGame);
+    
+    // let rightAnswer = [];
+    // let wrongAnswer = [];
+    // let pointsGame = null;
+    // let word = null;
+    // var cardAlias = null;
+    // let timerID = null;
+    // let second = 20;
+    
+    
+    
+    
+    
+    // // Start game!
+    // function startGame() {  
+    
+    //     gameInfo.remove();
+    //     goBackMenu.remove();
+    //     mainBlock.remove();
+    
+    //     gameField();
+    //     timerID = setInterval(timer, 1000);
+    //     clear();
+    // };
+    
+    // // Random image generation.
+    // function randomImg() {
+        
+    //     cardAlias = card[Math.floor(Math.random() * card.length)];
+    //     if (cardAlias == undefined) {
+    //         field.remove();
+    //         return oops();
+    //     };
+    //     img.src = cardAlias.img;
+    //     word = cardAlias;
+        
+    // };
+    
+    // const time = document.createElement('div');
+    // const img = document.createElement('img');
+    // const field = document.createElement('div');
+    // const flexBtn = document.createElement('div');
+    // const btnNo = document.createElement('button');
+    // const btnYes = document.createElement('button');
+    
+    // function gameField() {
+        
+    //     field.className = 'main-block field';
+    //     time.className = 'field_time';
+    //     time.innerHTML = '<span data-time>60</span>';
+    //     field.append(time);
+        
+    //         randomImg();
+    //         img.className = "img";
+    //         field.append(img);   
+    
+    //         flexBtn.className = 'field_flexBtn';
+    //         field.append(flexBtn);
+        
+    //         btnNo.className = 'answer-button wrong';
+    //         btnNo.id = 'card-false';
+    //         btnNo.textContent = 'No';
+    //         flexBtn.append(btnNo);
+        
+    //         btnYes.className = 'answer-button right';
+    //         btnYes.id = 'card-true';
+    //         btnYes.textContent = 'Yes';
+    //         flexBtn.append(btnYes);
+    //         sectionContainer.append(field);
+    
+    //     const throwOutBTN = document.querySelector('#card-false');
+    //     throwOutBTN.addEventListener('click', throwOutCard);
+    //     const nextBTN = document.querySelector('#card-true');
+    //     nextBTN.addEventListener('click', nextCard); 
+    
+    // };
+    
+    // // Сorrect answer and new card. guessed right
+    // function nextCard() {
+        
+    //     pointsGame += 1;
+    //     rightAnswer.push(word.word);  
+    
+    //         let deletIndex = card.indexOf(word);
+    //         card.splice(deletIndex, 1);
+    
+    //     if( second === 0 ) {
+    //         stopGame();
+    //     };
+        
+    //     randomImg();
+        
+    // }; 
+    
+    // // Wrong answer and new card.
+    // function throwOutCard() {
+        
+    //     wrongAnswer.push(word.word);
+    
+    //         let deletIndex = card.indexOf(word);
+    //         card.splice(deletIndex, 1);
+            
+    
+    //     if( second === 0 ) {
+    //         stopGame();
+    //     };
+    
+    //     randomImg();
+    // };
+    
+    
+    // // stop game and result output.
+    // const gameInfo = document.createElement('div');
+    
+    // function stopGame() {
+        
+    //     stopTimer();
+    //     field.remove();
+    
+    //     const rightAnswerResult = rightAnswer.join(', ');
+    //     const wrongAnswerResult = wrongAnswer.join(', ');
+    
+    //         gameInfo.className = 'answer_block';
+    //         gameInfo.innerHTML = '<h2 class="answer_title">Общий бал :&nbsp&nbsp&nbsp<span class="answer_points"></span></h2>';
+    //         sectionContainer.append(gameInfo);
+        
+    //     let points = document.querySelector('.answer_points');
+    //         points.innerText = `${pointsGame}`;
+       
+    //     const answerElementYes = document.createElement('div');
+    //         answerElementYes.className = 'answer_part';
+    //         answerElementYes.innerText = 'Отгаданние слова : ';
+    //         gameInfo.append(answerElementYes);
+    //         const elementYes = document.createElement('span');
+    //             elementYes.className = 'answer_out-right';
+    //             elementYes.innerText = `${rightAnswerResult}`;
+    //             answerElementYes.append(elementYes);
+    
+    //     const answerElementNo = document.createElement('div');
+    //         answerElementNo.className = 'answer_part';
+    //         answerElementNo.innerText = 'Не отгаданные слова : ';
+    //         gameInfo.append(answerElementNo);
+    //         const elementNo = document.createElement('span');
+    //             elementNo.className = 'answer_out-wrong';
+    //             elementNo.innerText = `${wrongAnswerResult}`;
+    //             answerElementNo.append(elementNo);
+        
+    //     const flexBtn2 = document.createElement('div');
+    //         flexBtn2.className = 'answer_flexBtn';
+    //         gameInfo.append(flexBtn2);
+    
+    //     const btnNewGame = document.createElement('button');
+    //         btnNewGame.id = 'NewGame';
+    //         btnNewGame.className = 'main-button utilit-btn1';
+    //         btnNewGame.innerText = 'New game';
+    //         flexBtn2.append(btnNewGame);
+    //             const newGame = document.querySelector('#NewGame');
+    //             newGame.addEventListener('click', startGame);
+    
+    //     const btnBackMenu = document.createElement('button');
+    //         btnBackMenu.id = 'BackMenu';
+    //         btnBackMenu.className = 'main-button utilit-btn2';
+    //         btnBackMenu.innerText = 'Back menu';
+    //         flexBtn2.append(btnBackMenu);
+    //             const BackMenu = document.querySelector('#BackMenu');
+    //             BackMenu.addEventListener('click', back);
+    // };
+    
+    // const goBackMenu = document.createElement('div');
+    // function back() {
+    
+    //     error.remove();
+    //     gameInfo.remove();
+        
+    
+    //     goBackMenu.className = 'main-block';
+    //     goBackMenu.innerHTML = '<h1 class="main-block_title">Alias</h1><button class="main-button utilit-btn1" id="start-game">Start game</button><button class="main-button utilit-btn2" data-open>Rules of game</button>';
+    //     sectionContainer.append(goBackMenu);
+    
+    //     const btnStart = document.querySelector('#start-game');
+    //         btnStart.addEventListener('click', startGame);
+    
+    //     const btnRules = document.querySelector('button[data-open]');
+    //         btnRules.addEventListener("click", openRules);
+    
+    // }; 
+    // export default goBackMenu;
+    
+    
+    // // Start timer in the game.
+    // function timer() {
+    //     const outTime = document.querySelector('span[data-time]');
+    
+    //     if ( second > 0 ) {
+    //         second -= 1;
+    //         outTime.textContent = second;
+    //     } else {
+    //         outTime.textContent = "finish";
+    //     };
+    // };
+    // // Resetting timer.
+    // function stopTimer() {
+    //    clearInterval(timerID);
+    //    second = 15;
+    // };
+    
+    // function clear() {
+    //     pointsGame = 0;
+    //     rightAnswer = [];
+    //     wrongAnswer = [];
+    // };
+    
+
+
+
+
+    // const error = document.createElement('div');
+    // const oops = function () {
+    //     stopTimer();
+    //         error.className = 'error';
+    //         error.innerHTML = '<h1 class="error_title">ERROR!</h1><p class="error_text">Эй, зачем ты со сной так? зачем так клацать? Я начинающий программис и все баги пофиксить не успел </p>';
+    //         sectionContainer.append(error)
+    //     const errorBtn = document.createElement('button');
+    //         errorBtn.className = 'error_button main-button';
+    //         errorBtn.textContent = 'Давай начнем все с начала'
+    //         error.append(errorBtn);
+    //     errorBtn.addEventListener('click', function() {
+    //         back();
+    //         gameInfo.remove();
+    //         location.reload();
+    //     });
+    // };
+    
+
+
+
+
+
+})();
+
 /******/ })()
 ;
 //# sourceMappingURL=bundle.js.map
