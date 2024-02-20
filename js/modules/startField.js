@@ -1,3 +1,4 @@
+import { container } from "webpack";
 import card from "../card";
 import generatorRandomCards from "./generatorRandomCards";
 
@@ -40,17 +41,37 @@ class GameField {
     }
 
     startGame() {
-        const aliasCard = generatorRandomCards(card);
+        let aliasCard = generatorRandomCards(card);
+
+        function createElementImg(aliasCard) {
+            const element = document.createElement('img');
+            element.classList.add('img');
+            element.src = aliasCard.img;
+            this.container.append(element);
+        }
+
         this.element.classList.add('main-block', 'field');
         this.element.innerHTML = `
             <span class="field_time" data-time>60</span>
-            <img src="${aliasCard.img}" class="img">
-           
+           ${createElementImg(aliasCard)}
             <div>
                 <button class="answer-button wrong" id="card-false">No</button>
                 <button class="answer-button right" id="card-true">Yes</button>
             </div>`;
         container.append(this.element);
+
+        document.querySelectorAll('button').forEach(item => {
+            item.addEventListener('click', (e) => {
+                if(e.target.classList.contains('wrong')) {
+                    
+                    
+                }
+                if(e.target.classList.contains('right')) {
+                    console.log(21);
+                }
+            })
+        })
+       
     }
 
     removeElement() {
