@@ -11,7 +11,6 @@ function createCloudAnimation(teg, src, arraySelectorClass) {
 
     element.src = src;
     bg.append(element);
-    console.log(element);
 }
 
 export default createCloudAnimation;

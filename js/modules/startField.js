@@ -1,12 +1,15 @@
-import { container } from "webpack";
+
 import card from "../card";
 import generatorRandomCards from "./generatorRandomCards";
+import timer from "./timer";
 
 
 class GameField {
     constructor(parendSelector, tegElement) {
         this.container = document.querySelector(parendSelector);
         this.element = document.createElement(tegElement);
+        this.rightAnswer = [];
+        this.wrongAnswer = [];
     }
 
     startMenu() {
@@ -40,34 +43,49 @@ class GameField {
         })
     }
 
-    startGame() {
+    startGame(card) {
+        
         let aliasCard = generatorRandomCards(card);
+        let pointsGame = 0;
 
-        function createElementImg(aliasCard) {
-            const element = document.createElement('img');
-            element.classList.add('img');
-            element.src = aliasCard.img;
-            this.container.append(element);
-        }
+
+        // function createElementImg(aliasCard) {
+        //     const element = document.createElement('img');
+        //     element.classList.add('img');
+        //     element.src = aliasCard.img;
+        //     container.append(element);
+        // }
 
         this.element.classList.add('main-block', 'field');
         this.element.innerHTML = `
             <span class="field_time" data-time>60</span>
-           ${createElementImg(aliasCard)}
+            <img class="img">
             <div>
                 <button class="answer-button wrong" id="card-false">No</button>
                 <button class="answer-button right" id="card-true">Yes</button>
             </div>`;
         container.append(this.element);
 
+        const img = document.querySelector('.img');
+        img.src = aliasCard.img;
+        timer();
+        
         document.querySelectorAll('button').forEach(item => {
             item.addEventListener('click', (e) => {
                 if(e.target.classList.contains('wrong')) {
-                    
+                  
                     
                 }
                 if(e.target.classList.contains('right')) {
-                    console.log(21);
+                    pointsGame += 1;
+                    rightAnswer.push(card.word);  
+                
+                        let deletIndex = card.indexOf(word);
+                        card.splice(deletIndex, 1);
+                
+                    if( second === 0 ) {
+                        stopGame();
+                    };
                 }
             })
         })

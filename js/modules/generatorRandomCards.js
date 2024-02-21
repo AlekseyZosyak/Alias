@@ -1,5 +1,4 @@
 
-
 function generatorRandomCards(card) {
     let cardAlias = card[Math.floor(Math.random() * card.length)];
 
