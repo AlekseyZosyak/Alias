@@ -119,9 +119,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _card__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../card */ "./js/card.js");
+
 
 function generatorRandomCards(card) {
     let cardAlias = card[Math.floor(Math.random() * card.length)];
+
+    // let deletIndex = card.indexOf(aliasCard.word);
+    // card.splice(deletIndex, 1);
 
     if (cardAlias == undefined) {
 
@@ -148,7 +153,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _card__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../card */ "./js/card.js");
 /* harmony import */ var _generatorRandomCards__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./generatorRandomCards */ "./js/modules/generatorRandomCards.js");
-/* harmony import */ var _timer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./timer */ "./js/modules/timer.js");
+Object(function webpackMissingModule() { var e = new Error("Cannot find module './timer'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
 
 
 
@@ -161,6 +166,7 @@ class GameField {
         this.element = document.createElement(tegElement);
         this.rightAnswer = [];
         this.wrongAnswer = [];
+        this.pointsGame = 0;
     }
 
     startMenu() {
@@ -194,18 +200,10 @@ class GameField {
         })
     }
 
-    startGame(card) {
-        
-        let aliasCard = (0,_generatorRandomCards__WEBPACK_IMPORTED_MODULE_1__["default"])(card);
-        let pointsGame = 0;
+    startGame() {
+        this.clear();
 
-
-        // function createElementImg(aliasCard) {
-        //     const element = document.createElement('img');
-        //     element.classList.add('img');
-        //     element.src = aliasCard.img;
-        //     container.append(element);
-        // }
+        let aliasCard = (0,_generatorRandomCards__WEBPACK_IMPORTED_MODULE_1__["default"])(_card__WEBPACK_IMPORTED_MODULE_0__["default"]);
 
         this.element.classList.add('main-block', 'field');
         this.element.innerHTML = `
@@ -219,30 +217,105 @@ class GameField {
 
         const img = document.querySelector('.img');
         img.src = aliasCard.img;
-        (0,_timer__WEBPACK_IMPORTED_MODULE_2__["default"])();
+
+        this.time();
         
         document.querySelectorAll('button').forEach(item => {
             item.addEventListener('click', (e) => {
                 if(e.target.classList.contains('wrong')) {
+                    
                   
+
+                    this.wrongAnswer.push(aliasCard.word);
+
+                    aliasCard = (0,_generatorRandomCards__WEBPACK_IMPORTED_MODULE_1__["default"])(_card__WEBPACK_IMPORTED_MODULE_0__["default"])
+                    img.src = aliasCard.img;
+
+                    if (document.querySelector('span[data-time]').textContent === 'finish') {
+                        this.removeElement();
+                        this.stopGame();
+                      }
                     
                 }
                 if(e.target.classList.contains('right')) {
-                    pointsGame += 1;
-                    rightAnswer.push(card.word);  
+
+                   
+
+                    this.pointsGame += 1;
+                    this.rightAnswer.push(aliasCard.word);  
+
+                    aliasCard = (0,_generatorRandomCards__WEBPACK_IMPORTED_MODULE_1__["default"])(_card__WEBPACK_IMPORTED_MODULE_0__["default"])
+                    img.src = aliasCard.img;
+                    
+                    console.log(this.rightAnswer);
+
+                    if (document.querySelector('span[data-time]').textContent === 'finish') {
+                      this.removeElement();
+                      this.stopGame();
+                    }
                 
-                        let deletIndex = card.indexOf(word);
-                        card.splice(deletIndex, 1);
-                
-                    if( second === 0 ) {
-                        stopGame();
-                    };
                 }
             })
         })
+
        
     }
 
+    stopGame() {
+
+        const rightAnswerResult = this.rightAnswer.join(', ');
+        const wrongAnswerResult = this.wrongAnswer.join(', ');
+
+        this.element = document.createElement('div');
+        this.element.classList.add('answer_block');
+        this.element.innerHTML = `
+        <h2 class="answer_title">Общий бал :&nbsp&nbsp&nbsp<span class="answer_points">${this.pointsGame}</span></h2>
+        <div class="answer_part">Отгаданние слова : <span class="answer_out-right">${rightAnswerResult}</span></div>
+        <div class="answer_part">Не отгадание слова : <span class="answer_out-wrong">${wrongAnswerResult}</span></div>
+            <div class="answer_flexBtn">
+                <button class="main-button utilit-btn1" id="NewGame">New game</button>
+                <button class="main-button utilit-btn2" id="BackMenu">Back Menu</button>
+            </div>
+        `
+        container.append(this.element);
+
+        document.querySelectorAll('button').forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (e.target.id === "NewGame") {
+                    this.removeElement();
+                    this.startGame();
+                }
+                if (e.target.id === "BackMenu") {
+                    this.removeElement();
+                    this.startMenu();
+                }
+            })
+        })
+        
+    }
+
+    time() {
+
+    const time = document.querySelector('span[data-time]');
+
+    let second = 3;
+
+    const timer = setInterval(() => {
+        if (second > 0) {
+            second -= 1;
+            time.textContent = second;
+        } else {
+            time.textContent = "finish";
+            clearInterval(timer);
+        };
+    }, 1000);
+    }
+
+    clear() {
+        this.pointsGame = 0;
+        this.rightAnswer = [];
+        this.wrongAnswer = [];
+    }
     removeElement() {
         this.element.remove();
     }
@@ -254,38 +327,6 @@ class GameField {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (GameField);
 
 
-
-/***/ }),
-
-/***/ "./js/modules/timer.js":
-/*!*****************************!*\
-  !*** ./js/modules/timer.js ***!
-  \*****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-
-function timer() {
-
-    const time = document.querySelector('span[data-time]');
-
-    let second = 10;
-
-    const timer = setInterval(() => {
-        if (second > 0) {
-            second -= 1;
-            time.textContent = second;
-        } else {
-            time.textContent = "finish";
-            clearInterval(timer);
-        };
-    }, 1000);
-};
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (timer);
 
 /***/ })
 
@@ -352,9 +393,6 @@ var __webpack_exports__ = {};
   !*** ./js/script.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
 /* harmony import */ var _db_cloud_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./db-cloud.js */ "./js/db-cloud.js");
 /* harmony import */ var _fon_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./fon.js */ "./js/fon.js");
 /* harmony import */ var _modules_startField_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/startField.js */ "./js/modules/startField.js");
@@ -377,243 +415,243 @@ window.addEventListener('DOMContentLoaded', () => {
 
     
     
-    const mainBlock = document.querySelector('.main-block');
-    const sectionContainer = document.querySelector('.container');
+    // const mainBlock = document.querySelector('.main-block');
+    // const sectionContainer = document.querySelector('.container');
     
-    const btnStart = document.querySelector('#start-game');
-    btnStart.addEventListener('click', startGame);
+    // const btnStart = document.querySelector('#start-game');
+    // btnStart.addEventListener('click', startGame);
     
-    let rightAnswer = [];
-    let wrongAnswer = [];
-    let pointsGame = null;
-    let word = null;
-    var cardAlias = null;
-    let timerID = null;
-    let second = 20;
-    
-    
+    // let rightAnswer = [];
+    // let wrongAnswer = [];
+    // let pointsGame = null;
+    // let word = null;
+    // var cardAlias = null;
+    // let timerID = null;
+    // let second = 20;
     
     
     
-    // Start game!
-    function startGame() {  
     
-        gameInfo.remove();
-        goBackMenu.remove();
-        mainBlock.remove();
     
-        gameField();
-        timerID = setInterval(timer, 1000);
-        clear();
-    };
+    // // Start game!
+    // function startGame() {  
     
-    // Random image generation.
-    function randomImg() {
+    //     gameInfo.remove();
+    //     goBackMenu.remove();
+    //     mainBlock.remove();
+    
+    //     gameField();
+    //     timerID = setInterval(timer, 1000);
+    //     clear();
+    // };
+    
+    // // Random image generation.
+    // function randomImg() {
         
-        cardAlias = card[Math.floor(Math.random() * card.length)];
-        if (cardAlias == undefined) {
-            field.remove();
-            return oops();
-        };
-        img.src = cardAlias.img;
-        word = cardAlias;
+    //     cardAlias = card[Math.floor(Math.random() * card.length)];
+    //     if (cardAlias == undefined) {
+    //         field.remove();
+    //         return oops();
+    //     };
+    //     img.src = cardAlias.img;
+    //     word = cardAlias;
         
-    };
+    // };
     
-    const time = document.createElement('div');
-    const img = document.createElement('img');
-    const field = document.createElement('div');
-    const flexBtn = document.createElement('div');
-    const btnNo = document.createElement('button');
-    const btnYes = document.createElement('button');
+    // const time = document.createElement('div');
+    // const img = document.createElement('img');
+    // const field = document.createElement('div');
+    // const flexBtn = document.createElement('div');
+    // const btnNo = document.createElement('button');
+    // const btnYes = document.createElement('button');
     
-    function gameField() {
+    // function gameField() {
         
-        field.className = 'main-block field';
-        time.className = 'field_time';
-        time.innerHTML = '<span data-time>60</span>';
-        field.append(time);
+    //     field.className = 'main-block field';
+    //     time.className = 'field_time';
+    //     time.innerHTML = '<span data-time>60</span>';
+    //     field.append(time);
         
-            randomImg();
-            img.className = "img";
-            field.append(img);   
+    //         randomImg();
+    //         img.className = "img";
+    //         field.append(img);   
     
-            flexBtn.className = 'field_flexBtn';
-            field.append(flexBtn);
+    //         flexBtn.className = 'field_flexBtn';
+    //         field.append(flexBtn);
         
-            btnNo.className = 'answer-button wrong';
-            btnNo.id = 'card-false';
-            btnNo.textContent = 'No';
-            flexBtn.append(btnNo);
+    //         btnNo.className = 'answer-button wrong';
+    //         btnNo.id = 'card-false';
+    //         btnNo.textContent = 'No';
+    //         flexBtn.append(btnNo);
         
-            btnYes.className = 'answer-button right';
-            btnYes.id = 'card-true';
-            btnYes.textContent = 'Yes';
-            flexBtn.append(btnYes);
-            sectionContainer.append(field);
+    //         btnYes.className = 'answer-button right';
+    //         btnYes.id = 'card-true';
+    //         btnYes.textContent = 'Yes';
+    //         flexBtn.append(btnYes);
+    //         sectionContainer.append(field);
     
-        const throwOutBTN = document.querySelector('#card-false');
-        throwOutBTN.addEventListener('click', throwOutCard);
-        const nextBTN = document.querySelector('#card-true');
-        nextBTN.addEventListener('click', nextCard); 
+    //     const throwOutBTN = document.querySelector('#card-false');
+    //     throwOutBTN.addEventListener('click', throwOutCard);
+    //     const nextBTN = document.querySelector('#card-true');
+    //     nextBTN.addEventListener('click', nextCard); 
     
-    };
+    // };
     
-    // Сorrect answer and new card. guessed right
-    function nextCard() {
+    // // Сorrect answer and new card. guessed right
+    // function nextCard() {
         
-        pointsGame += 1;
-        rightAnswer.push(word.word);  
+    //     pointsGame += 1;
+    //     rightAnswer.push(word.word);  
     
-            let deletIndex = card.indexOf(word);
-            card.splice(deletIndex, 1);
+    //         let deletIndex = card.indexOf(word);
+    //         card.splice(deletIndex, 1);
     
-        if( second === 0 ) {
-            stopGame();
-        };
+    //     if( second === 0 ) {
+    //         stopGame();
+    //     };
         
-        randomImg();
+    //     randomImg();
         
-    }; 
+    // }; 
     
-    // Wrong answer and new card.
-    function throwOutCard() {
+    // // Wrong answer and new card.
+    // function throwOutCard() {
         
-        wrongAnswer.push(word.word);
+    //     wrongAnswer.push(word.word);
     
-            let deletIndex = card.indexOf(word);
-            card.splice(deletIndex, 1);
+    //         let deletIndex = card.indexOf(word);
+    //         card.splice(deletIndex, 1);
             
     
-        if( second === 0 ) {
-            stopGame();
-        };
+    //     if( second === 0 ) {
+    //         stopGame();
+    //     };
     
-        randomImg();
-    };
+    //     randomImg();
+    // };
     
     
-    // stop game and result output.
-    const gameInfo = document.createElement('div');
+    // // stop game and result output.
+    // const gameInfo = document.createElement('div');
     
-    function stopGame() {
+    // function stopGame() {
         
-        stopTimer();
-        field.remove();
+    //     stopTimer();
+    //     field.remove();
     
-        const rightAnswerResult = rightAnswer.join(', ');
-        const wrongAnswerResult = wrongAnswer.join(', ');
+    //     const rightAnswerResult = rightAnswer.join(', ');
+    //     const wrongAnswerResult = wrongAnswer.join(', ');
     
-            gameInfo.className = 'answer_block';
-            gameInfo.innerHTML = '<h2 class="answer_title">Общий бал :&nbsp&nbsp&nbsp<span class="answer_points"></span></h2>';
-            sectionContainer.append(gameInfo);
+    //         gameInfo.className = 'answer_block';
+    //         gameInfo.innerHTML = '<h2 class="answer_title">Общий бал :&nbsp&nbsp&nbsp<span class="answer_points"></span></h2>';
+    //         sectionContainer.append(gameInfo);
         
-        let points = document.querySelector('.answer_points');
-            points.innerText = `${pointsGame}`;
+    //     let points = document.querySelector('.answer_points');
+    //         points.innerText = `${pointsGame}`;
        
-        const answerElementYes = document.createElement('div');
-            answerElementYes.className = 'answer_part';
-            answerElementYes.innerText = 'Отгаданние слова : ';
-            gameInfo.append(answerElementYes);
-            const elementYes = document.createElement('span');
-                elementYes.className = 'answer_out-right';
-                elementYes.innerText = `${rightAnswerResult}`;
-                answerElementYes.append(elementYes);
+    //     const answerElementYes = document.createElement('div');
+    //         answerElementYes.className = 'answer_part';
+    //         answerElementYes.innerText = 'Отгаданние слова : ';
+    //         gameInfo.append(answerElementYes);
+    //         const elementYes = document.createElement('span');
+    //             elementYes.className = 'answer_out-right';
+    //             elementYes.innerText = `${rightAnswerResult}`;
+    //             answerElementYes.append(elementYes);
     
-        const answerElementNo = document.createElement('div');
-            answerElementNo.className = 'answer_part';
-            answerElementNo.innerText = 'Не отгаданные слова : ';
-            gameInfo.append(answerElementNo);
-            const elementNo = document.createElement('span');
-                elementNo.className = 'answer_out-wrong';
-                elementNo.innerText = `${wrongAnswerResult}`;
-                answerElementNo.append(elementNo);
+    //     const answerElementNo = document.createElement('div');
+    //         answerElementNo.className = 'answer_part';
+    //         answerElementNo.innerText = 'Не отгаданные слова : ';
+    //         gameInfo.append(answerElementNo);
+    //         const elementNo = document.createElement('span');
+    //             elementNo.className = 'answer_out-wrong';
+    //             elementNo.innerText = `${wrongAnswerResult}`;
+    //             answerElementNo.append(elementNo);
         
-        const flexBtn2 = document.createElement('div');
-            flexBtn2.className = 'answer_flexBtn';
-            gameInfo.append(flexBtn2);
+    //     const flexBtn2 = document.createElement('div');
+    //         flexBtn2.className = 'answer_flexBtn';
+    //         gameInfo.append(flexBtn2);
     
-        const btnNewGame = document.createElement('button');
-            btnNewGame.id = 'NewGame';
-            btnNewGame.className = 'main-button utilit-btn1';
-            btnNewGame.innerText = 'New game';
-            flexBtn2.append(btnNewGame);
-                const newGame = document.querySelector('#NewGame');
-                newGame.addEventListener('click', startGame);
+    //     const btnNewGame = document.createElement('button');
+    //         btnNewGame.id = 'NewGame';
+    //         btnNewGame.className = 'main-button utilit-btn1';
+    //         btnNewGame.innerText = 'New game';
+    //         flexBtn2.append(btnNewGame);
+    //             const newGame = document.querySelector('#NewGame');
+    //             newGame.addEventListener('click', startGame);
     
-        const btnBackMenu = document.createElement('button');
-            btnBackMenu.id = 'BackMenu';
-            btnBackMenu.className = 'main-button utilit-btn2';
-            btnBackMenu.innerText = 'Back menu';
-            flexBtn2.append(btnBackMenu);
-                const BackMenu = document.querySelector('#BackMenu');
-                BackMenu.addEventListener('click', back);
-    };
+    //     const btnBackMenu = document.createElement('button');
+    //         btnBackMenu.id = 'BackMenu';
+    //         btnBackMenu.className = 'main-button utilit-btn2';
+    //         btnBackMenu.innerText = 'Back menu';
+    //         flexBtn2.append(btnBackMenu);
+    //             const BackMenu = document.querySelector('#BackMenu');
+    //             BackMenu.addEventListener('click', back);
+    // };
     
-    const goBackMenu = document.createElement('div');
-    function back() {
+    // const goBackMenu = document.createElement('div');
+    // function back() {
     
-        error.remove();
-        gameInfo.remove();
+    //     error.remove();
+    //     gameInfo.remove();
         
     
-        goBackMenu.className = 'main-block';
-        goBackMenu.innerHTML = '<h1 class="main-block_title">Alias</h1><button class="main-button utilit-btn1" id="start-game">Start game</button><button class="main-button utilit-btn2" data-open>Rules of game</button>';
-        sectionContainer.append(goBackMenu);
+    //     goBackMenu.className = 'main-block';
+    //     goBackMenu.innerHTML = '<h1 class="main-block_title">Alias</h1><button class="main-button utilit-btn1" id="start-game">Start game</button><button class="main-button utilit-btn2" data-open>Rules of game</button>';
+    //     sectionContainer.append(goBackMenu);
     
-        const btnStart = document.querySelector('#start-game');
-            btnStart.addEventListener('click', startGame);
+    //     const btnStart = document.querySelector('#start-game');
+    //         btnStart.addEventListener('click', startGame);
     
-        const btnRules = document.querySelector('button[data-open]');
-            btnRules.addEventListener("click", openRules);
+    //     const btnRules = document.querySelector('button[data-open]');
+    //         btnRules.addEventListener("click", openRules);
     
-    }; 
-    /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (goBackMenu);
+    // }; 
+    // export default goBackMenu;
     
     
-    // Start timer in the game.
-    function timer() {
-        const outTime = document.querySelector('span[data-time]');
+    // // Start timer in the game.
+    // function timer() {
+    //     const outTime = document.querySelector('span[data-time]');
     
-        if ( second > 0 ) {
-            second -= 1;
-            outTime.textContent = second;
-        } else {
-            outTime.textContent = "finish";
-        };
-    };
-    // Resetting timer.
-    function stopTimer() {
-       clearInterval(timerID);
-       second = 15;
-    };
+    //     if ( second > 0 ) {
+    //         second -= 1;
+    //         outTime.textContent = second;
+    //     } else {
+    //         outTime.textContent = "finish";
+    //     };
+    // };
+    // // Resetting timer.
+    // function stopTimer() {
+    //    clearInterval(timerID);
+    //    second = 15;
+    // };
     
-    function clear() {
-        pointsGame = 0;
-        rightAnswer = [];
-        wrongAnswer = [];
-    };
+    // function clear() {
+    //     pointsGame = 0;
+    //     rightAnswer = [];
+    //     wrongAnswer = [];
+    // };
     
 
 
 
 
-    const error = document.createElement('div');
-    const oops = function () {
-        stopTimer();
-            error.className = 'error';
-            error.innerHTML = '<h1 class="error_title">ERROR!</h1><p class="error_text">Эй, зачем ты со сной так? зачем так клацать? Я начинающий программис и все баги пофиксить не успел </p>';
-            sectionContainer.append(error)
-        const errorBtn = document.createElement('button');
-            errorBtn.className = 'error_button main-button';
-            errorBtn.textContent = 'Давай начнем все с начала'
-            error.append(errorBtn);
-        errorBtn.addEventListener('click', function() {
-            back();
-            gameInfo.remove();
-            location.reload();
-        });
-    };
+    // const error = document.createElement('div');
+    // const oops = function () {
+    //     stopTimer();
+    //         error.className = 'error';
+    //         error.innerHTML = '<h1 class="error_title">ERROR!</h1><p class="error_text">Эй, зачем ты со сной так? зачем так клацать? Я начинающий программис и все баги пофиксить не успел </p>';
+    //         sectionContainer.append(error)
+    //     const errorBtn = document.createElement('button');
+    //         errorBtn.className = 'error_button main-button';
+    //         errorBtn.textContent = 'Давай начнем все с начала'
+    //         error.append(errorBtn);
+    //     errorBtn.addEventListener('click', function() {
+    //         back();
+    //         gameInfo.remove();
+    //         location.reload();
+    //     });
+    // };
     
 
 
