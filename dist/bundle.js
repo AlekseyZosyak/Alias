@@ -119,7 +119,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _card__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../card */ "./js/card.js");
 
 
 function generatorRandomCards(card) {
@@ -130,7 +129,7 @@ function generatorRandomCards(card) {
 
     if (cardAlias == undefined) {
 
-        return oops();
+       
     };
 
     return cardAlias;
@@ -153,8 +152,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _card__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../card */ "./js/card.js");
 /* harmony import */ var _generatorRandomCards__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./generatorRandomCards */ "./js/modules/generatorRandomCards.js");
-Object(function webpackMissingModule() { var e = new Error("Cannot find module './timer'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
-
 
 
 

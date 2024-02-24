@@ -1,7 +1,6 @@
 
 import card from "../card";
 import generatorRandomCards from "./generatorRandomCards";
-import timer from "./timer";
 
 
 class GameField {
